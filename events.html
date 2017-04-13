@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+	Phased by Pixelarity
+	pixelarity.com @pixelarity
+	License: pixelarity.com/license
+-->
+<html>
+<head>
+	<title>Events Calendar - Sheikh Babikir</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+
+	<meta name="description" 			content="Events with Sheikh Babikir in and around the UK and beyond.">
+  	<meta name="author" 				content="Sheikh Babikir">
+  	<meta name="keywords" 				content="Sheikh Babikir, Sheikh Babikir events, Islam, sufism">
+
+	<meta property="og:type"               content="article" />
+	<meta property="og:title"              content="Events Calendar - Sheikh Babikir" />
+	<meta property="og:description"        content="Events with Sheikh Babikir in and around the UK and beyond." />
+	<meta property="og:image"              content="/images/SheikhBabikir_hqdefault.jpg" />
+</head>
+</head>
+<body class="right-sidebar">
+	<div id="page-wrapper">
+
+		<!-- Header Wrapper -->
+		<div id="header-wrapper"></div>
+
+		<!-- Wide Content Wrapper -->
+		<div class="wrapper-style2">
+
+			<!-- Wide Content -->
+			<div class="container">
+				<div class="row 200%">
+					<div class="9u 12u(mobile)">
+						<article id="left-content">
+							<header>
+								<h2>Events with The Sheikh</h2>
+							</header>
+
+							<div id='calendar'></div>
+						</article>
+
+					</div>
+
+					<div class="3u 12u(mobile)">
+
+						<div id='calendarEvent' class="overlay">
+							<div class="popup">
+								<h2 class="title"></h2>
+								<div class="content">
+									<p class="date"></p>
+									<p class="description"></p>
+									<p class="location"></p>							
+								</div>
+								<a class="close"><i class="fa fa-times-circle" aria-hidden="true"></i></a>
+							</div>
+						</div>
+
+						<div id="instagram-wrapper"></div>
+						<div id="twitter-wrapper"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Wrapper -->
+		<div id="main-wrapper"></div>
+
+
+		<!-- Footer Wrapper -->
+		<div id="footer-wrapper"></div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/skel.min.js"></script>
+		<script src="assets/js/skel-viewport.min.js"></script>
+		<script src="assets/js/util.js"></script>
+
+		<script src='assets/js/moment.min.js'></script>
+		<script src='assets/js/fullcalendar.min.js'></script>
+		<link href='http://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.css' rel='stylesheet' />
+		<script src='assets/js/gcal.js'></script>
+
+		<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+		<script src="assets/js/main.js"></script>
+
+		<script src="assets/js/custom/twitter.js"></script>
+		<script src="assets/js/custom/facebook.js"></script>
+
+
+		<script type='text/javascript'>
+			$(document).ready(function() {
+				$('#calendar').fullCalendar({
+					googleCalendarApiKey: 'AIzaSyByBa0oV-7f4Kf85Y87CKNOfBs47v-8rx8',
+					events: {
+						googleCalendarId: 'sheikh@rumis.org',
+						className: 'calendarEvent'
+					},
+					eventLimit: true,
+					firstDay: 6,
+					eventClick: function(event, jsEvent, view) {
+
+						var startDateTime = new Date(event.start),
+						endDateTime = new Date(event.end),
+
+						startDate = moment(startDateTime).format('DD MMM YYYY'),
+						endDate = moment(endDateTime).format('DD MMM YYYY'),
+						startTime = moment(startDateTime).format('LT'),
+						endTime = moment(endDateTime).format('LT'),
+						onSameDay = (Math.abs(endDateTime - startDateTime) / 36e5) <= 24,
+
+						eventDate =
+						event.allDay ? 
+						(onSameDay ?  startDate :  startDate + ' - ' + endDate)
+						:
+						onSameDay ? 
+						startDate + ' : ' + startTime + ' - ' + endTime
+						:   startDate + ', ' + startTime + ' - ' + endDate + ', ' + endTime;
+
+						$('#calendarEvent .title').text(event.title);
+						$('#calendarEvent .date').text(eventDate);
+						$('#calendarEvent .description').html( (event.description !== undefined) ?  urlify(event.description) : '');
+						$('#calendarEvent .location').text( (event.location !== undefined) ?  event.location : '');
+
+						$('#calendarEvent').show();
+						return false;
+					},
+					views: {
+						week: {
+							columnFormat: 'ddd\nD\nMMM'
+						}
+					},
+					header: {
+						left: 'prev,next',
+						center: 'title',
+						right: 'today'
+					}
+				});
+
+				$('.close').click(function(){
+					$('#calendarEvent').hide();
+					return false;
+				});	
+
+				$('.overlay').on('click', function(e) {
+					if (e.target !== this) return;
+					$('#calendarEvent').hide();
+					return false;
+				});	
+
+				if (screen.width < 737) $('#calendar').fullCalendar('changeView', 'basicWeek');
+				if (screen.width >= 737) $('#calendar').fullCalendar('changeView', 'month');
+
+				$(window).bind('resize', function () {
+					if (screen.width < 737) $('#calendar').fullCalendar('changeView', 'basicWeek');
+					if (screen.width >= 737) $('#calendar').fullCalendar('changeView', 'month');
+				});
+			});
+
+			function urlify(text) {
+				var urlRegex = /(https?:\/\/[^\s]+)/g;
+				return text.replace(urlRegex, function(url) {
+					return '<a target="_blank" href="' + url + '">' + 'Link' + '</a>';
+				});
+			}
+		</script>
+
+	</body>
+	</html>

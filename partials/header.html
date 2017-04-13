@@ -1,0 +1,67 @@
+<!-- Header -->
+<header id="header" class="container">
+		<!-- Logo -->
+		<div id="logo">
+			<a href="index.html"><h1>Sheikh Babikir Ahmed Babikir</h1></a>
+		</div>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul>
+				<li class="current_page_item"><a href="/index.html">Home</a></li>
+				<li><a href="/about-the-sheikh.html">The Sheikh</a></li>
+				<li>
+					<a href="#">Projects</a>
+					<ul>
+						<li><a href="/about-ulfa-aid.html">Ulfa Aid</a></li>
+						<li><a href="/about-rumis-cave.html">Rumi's Cave</a></li>
+						<li><a href="/about-rumis-kitchen.html">Rumi's Kitchen</a></li>
+					</ul>
+				</li>
+				<li><a href="/events.html">Events</a></li>
+				<li><a href="/articles.html">Articles</a></li>
+				<li><a href="/library.html" class="navButton">Lecture Library</a></li>
+			</ul>
+		</nav>
+</header>
+
+<script type="text/javascript">
+	
+	var $body = $('body');
+
+	$(
+		'<div id="titleBar">' +
+		'<a href="#navPanel" class="toggle"></a>' +
+		'</div>'
+		)
+	.appendTo($body);
+
+	$(
+		'<div id="navPanel">' +
+		'<nav>' +
+		$('#nav').navList() +
+		'</nav>' +
+		'</div>'
+		)
+	.appendTo($body)
+	.panel({
+		delay: 500,
+		hideOnClick: true,
+		hideOnSwipe: true,
+		resetScroll: true,
+		resetForms: true,
+		side: 'left',
+		target: $body,
+		visibleClass: 'navPanel-visible'
+	});
+
+	$('#nav > ul').dropotron({
+		offsetY: -10,
+		mode: 'fade',
+		noOpenerFade: true,
+		speed: 300,
+		hideDelay: 350,
+		alignment: 'center'
+	});
+
+</script>
